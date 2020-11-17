@@ -122,6 +122,7 @@ def val_collect(x):
         val_name.append(tem_list)
     return val_name
 
+
 def value_collect(x):
     val_name = []
     val_name.append(['ارزش'])
@@ -133,6 +134,20 @@ def value_collect(x):
         tem_list = [ISIN]
         val_name.append(tem_list)
     return val_name
+
+
+def change_collect(x):
+    val_name = []
+    val_name.append(['تغییر (معامله) به ریال'])
+    for item in x:
+        item = item.split(',')
+        ISIN = item[10]
+        ISIN = ISIN.replace('[', '')
+        ISIN = ISIN.replace('"', '')
+        tem_list = [ISIN]
+        val_name.append(tem_list)
+    return val_name
+
 
 def diff_collect(x):
     diff_name = []
@@ -146,6 +161,124 @@ def diff_collect(x):
         diff_name.append(tem_list)
     return diff_name
 
+
+def change_final_collect(x):
+    val_name = []
+    val_name.append(['تغییر (پایانی) به ریال'])
+    for item in x:
+        item = item.split(',')
+        ISIN = item[13]
+        ISIN = ISIN.replace('[', '')
+        ISIN = ISIN.replace('"', '')
+        tem_list = [ISIN]
+        val_name.append(tem_list)
+    return val_name
+
+
+def moj_day_collect(x):
+    val_name = []
+    val_name.append(['(بیشترین)بازه‌ی روز'])
+    for item in x:
+        item = item.split(',')
+        ISIN = item[17]
+        ISIN = ISIN.replace('[', '')
+        ISIN = ISIN.replace('"', '')
+        tem_list = [ISIN]
+        val_name.append(tem_list)
+    return val_name
+
+
+def moj_daym_collect(x):
+    val_name = []
+    val_name.append(['(کمترین)بازه‌ی روز'])
+    for item in x:
+        item = item.split(',')
+        ISIN = item[18]
+        ISIN = ISIN.replace('[', '')
+        ISIN = ISIN.replace('"', '')
+        tem_list = [ISIN]
+        val_name.append(tem_list)
+    return val_name
+
+
+def count_collect(x):
+    val_name = []
+    val_name.append(['تعداد معاملات'])
+    for item in x:
+        item = item.split(',')
+        ISIN = item[15]
+        ISIN = ISIN.replace('[', '')
+        ISIN = ISIN.replace('"', '')
+        tem_list = [ISIN]
+        val_name.append(tem_list)
+    return val_name
+
+
+def first_collect(x):
+    val_name = []
+    val_name.append(['قیمت اولین معامله'])
+    for item in x:
+        item = item.split(',')
+        ISIN = item[19]
+        ISIN = ISIN.replace('[', '')
+        ISIN = ISIN.replace('"', '')
+        tem_list = [ISIN]
+        val_name.append(tem_list)
+    return val_name
+
+
+def mabna_collect(x):
+    val_name = []
+    val_name.append(['حجم مبنا'])
+    for item in x:
+        item = item.split(',')
+        ISIN = item[20]
+        ISIN = ISIN.replace('[', '')
+        ISIN = ISIN.replace('"', '')
+        tem_list = [ISIN]
+        val_name.append(tem_list)
+    return val_name
+
+
+def yesterday_collect(x):
+    val_name = []
+    val_name.append(['قیمت دیروز'])
+    for item in x:
+        item = item.split(',')
+        ISIN = item[22]
+        ISIN = ISIN.replace('[', '')
+        ISIN = ISIN.replace('"', '')
+        tem_list = [ISIN]
+        val_name.append(tem_list)
+    return val_name
+
+
+def b_min_collect(x):
+    val_name = []
+    val_name.append(['حدپایین روز'])
+    for item in x:
+        item = item.split(',')
+        ISIN = item[27]
+        ISIN = ISIN.replace('[', '')
+        ISIN = ISIN.replace('"', '')
+        tem_list = [ISIN]
+        val_name.append(tem_list)
+    return val_name
+
+
+def b_max_collect(x):
+    val_name = []
+    val_name.append(['حد بالای روز'])
+    for item in x:
+        item = item.split(',')
+        ISIN = item[28]
+        ISIN = ISIN.replace('[', '')
+        ISIN = ISIN.replace('"', '')
+        tem_list = [ISIN]
+        val_name.append(tem_list)
+    return val_name
+
+
 while True:
     url = "http://mdapi.tadbirrlc.com/api/Symbol/all"
 
@@ -156,6 +289,7 @@ while True:
 
     x = parsed['List'].split('],')
     time.sleep(5)
+    print("done")
 
     wb = xw.Book('test.xlsx')
     worksheet = wb.sheets('Sheet1')
@@ -170,3 +304,13 @@ while True:
     worksheet.range('I1').value = val_collect(x)
     worksheet.range('j1').value = value_collect(x)
     worksheet.range('K1').value = diff_collect(x)
+    worksheet.range('L1').value = change_collect(x)
+    worksheet.range('M1').value = change_final_collect(x)
+    worksheet.range('N1').value = count_collect(x)
+    worksheet.range('O1').value = moj_day_collect(x)
+    worksheet.range('P1').value = moj_daym_collect(x)
+    worksheet.range('Q1').value = first_collect(x)
+    worksheet.range('R1').value = mabna_collect(x)
+    worksheet.range('S1').value = yesterday_collect(x)
+    worksheet.range('T1').value = b_min_collect(x)
+    worksheet.range('U1').value = b_max_collect(x)
